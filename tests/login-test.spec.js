@@ -17,22 +17,22 @@ test.describe("Log in", () => {
     await expect(appointmentPage.makeAppointmentButton).toBeVisible();
   });
   test("Incorrect username and password", async ({ page }) => {
-    const loginPage2 = new LoginPage(page);
-    await loginPage2.login("John", "ThisIsNot");
+    const loginPage = new LoginPage(page);
+    await loginPage.login("John", "ThisIsNot");
     await expect(page.locator(".text-danger")).toHaveText(
       "Login failed! Please ensure the username and password are valid."
     );
   });
   test("Incorrect username and correct password", async ({ page }) => {
-    const loginPage3 = new LoginPage(page);
-    await loginPage3.login("John", "ThisIsNotAPassword");
+    const loginPage = new LoginPage(page);
+    await loginPage.login("John", "ThisIsNotAPassword");
     await expect(page.locator(".text-danger")).toHaveText(
       "Login failed! Please ensure the username and password are valid."
     );
   });
   test("Correct username and incorrect password", async ({ page }) => {
-    const loginPage4 = new LoginPage(page);
-    await loginPage4.login("John Doe", "ThisIsNot");
+    const loginPage = new LoginPage(page);
+    await loginPage.login("John Doe", "ThisIsNot");
     await expect(page.locator(".text-danger")).toHaveText(
       "Login failed! Please ensure the username and password are valid."
     );
