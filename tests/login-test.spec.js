@@ -13,7 +13,7 @@ const loadPage =
     },
   });
 test.describe("Log in", () => {
-  // let loginPage;
+  let loginPage;
   // test.beforeEach(async ({ page }) => {
   //   await page.goto(
   //     "https://katalon-demo-cura.herokuapp.com/profile.php#login"
