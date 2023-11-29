@@ -1,7 +1,7 @@
 const { test, expect } = require("@playwright/test");
 import { LoginPage } from "../pages/login.page";
 import { AppointmentPage } from "../pages/appointment.page";
-public async goTo( "https://katalon-demo-cura.herokuapp.com/profile.php#login"){
+public async goTo("https://katalon-demo-cura.herokuapp.com/profile.php#login"){
   await page.goto()
 };
 const loadPage =
