@@ -4,8 +4,8 @@ import { AppointmentPage } from "../pages/appointment.page";
 public async goTo("https://katalon-demo-cura.herokuapp.com/profile.php#login"){
   await page.goto()
 };
-const loadPage =
-  base.loadPage.extend({
+const test =
+  base.test.extend({
     loginPage: async ({ page }, use) => {
       const loginPage = new LoginPage(page);
       await loginPage.goTo();
@@ -15,12 +15,12 @@ const loadPage =
 test.describe("Log in", () => {
   let loginPage;
   // test.beforeEach(async ({ page }) => {
-  //   await page.goto(
+  //   await page.goto( 
   //     "https://katalon-demo-cura.herokuapp.com/profile.php#login"
   //   );
   //   loginPage = new LoginPage(page);
   // });
-  test("Correct username and password", async ({ page }) => {
+  test("Correct username and password", async ({ page, loginPage }) => {
     const appointmentPage = new AppointmentPage(page);
     await loginPage.login("John Doe", "ThisIsNotAPassword");
     await page.waitForURL(
@@ -28,19 +28,19 @@ test.describe("Log in", () => {
     );
     await expect(appointmentPage.makeAppointmentButton).toBeVisible();
   });
-  test("Incorrect username and password", async ({ page }) => {
+  test("Incorrect username and password", async ({ page, loginPage }) => {
     await loginPage.login("John", "ThisIsNot");
     await expect(loginPage.loginError).toHaveText(
       "Login failed! Please ensure the username and password are valid."
     );
   });
-  test("Incorrect username and correct password", async ({ page }) => {
+  test("Incorrect username and correct password", async ({ page, loginPage }) => {
     await loginPage.login("John", "ThisIsNotAPassword");
     await expect(loginPage.loginError).toHaveText(
       "Login failed! Please ensure the username and password are valid."
     );
   });
-  test("Correct username and incorrect password", async ({ page }) => {
+  test("Correct username and incorrect password", async ({ page, loginPage }) => {
     await loginPage.login("John Doe", "ThisIsNot");
     await expect(loginPage.loginError).toHaveText(
       "Login failed! Please ensure the username and password are valid."
