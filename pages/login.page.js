@@ -6,7 +6,9 @@ exports.LoginPage = class LoginPage {
     this.loginButton = page.locator("#btn-login");
     this.loginError = page.locator(".text-danger");
   }
-
+  async goTo (){
+   await this.page.goto("https://katalon-demo-cura.herokuapp.com/profile.php#login")
+  }
   async login(username, password) {
     await this.usernameTextbox.fill(username);
     await this.passwordTextbox.fill(password);
