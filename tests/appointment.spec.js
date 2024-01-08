@@ -5,18 +5,19 @@ const expect = base.expect;
 const test = base.test.extend({
   loginPage: async ({ page }, use) => {
     const loginPage = new LoginPage(page);
-    const appointmentPage = new AppointmentPage(page);
     await loginPage.goTo();
     await use(loginPage);
     await loginPage.login("John Doe", "ThisIsNotAPassword");
-    await appointmentPage.waitFor();
-    await expect(appointmentPage.makeAppointmentButton).toBeVisible();
   },
+  appointmentPage: async ({ page }, use) => {
+    const appointmentPage = new AppointmentPage(page);
+    await appointmentPage.waitFor();
+    await use(appointmentPage);
+  }
 });
 test.describe("Make appointment", () => {
-  test("Make appointment by filling in all fields correctly", async ({
-    page, loginPage, appointmentPage
-  }) => {
+  test("Make appointment by filling in all fields correctly", async ({appointmentPage}) => {
+    await expect(appointmentPage.makeAppointmentButton).toBeVisible();
     await appointmentPage.appointment(
       "Tokyo CURA Healthcare Center",
       "Medicaid",
@@ -26,5 +27,5 @@ test.describe("Make appointment", () => {
     await expect(message.AppointmentPage).toHaveText(
       "Appointment Confirmation"
     );
-  });
+  })
 });
