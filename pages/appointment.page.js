@@ -3,7 +3,7 @@ exports.AppointmentPage = class AppointmentPage {
     this.page = page;
     this.makeAppointmentButton = page.locator("#btn-make-appointment");
     this.facility = page.locator("#combo_facility");
-    this.readmission = page.locator("#chk_hospotal_readmission");
+    this.readmission = page.locator("#chk_hospital_readmission");
     this.program = page.locator("[name='programs']");
     this.calendar = page.locator("#txt_visit_date");
     this.comment = page.locator("#txt_comment");

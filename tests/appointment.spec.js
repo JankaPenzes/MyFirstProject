@@ -6,8 +6,8 @@ const test = base.test.extend({
   loginPage: async ({ page }, use) => {
     const loginPage = new LoginPage(page);
     await loginPage.goTo();
-    await use(loginPage);
     await loginPage.login("John Doe", "ThisIsNotAPassword");
+    await use(loginPage);
   },
   appointmentPage: async ({ page }, use) => {
     const appointmentPage = new AppointmentPage(page);
