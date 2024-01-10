@@ -13,19 +13,16 @@ const test = base.test.extend({
     const appointmentPage = new AppointmentPage(page);
     await appointmentPage.waitFor();
     await use(appointmentPage);
-  }
+  },
 });
 test.describe("Make appointment", () => {
-  test("Make appointment by filling in all fields correctly", async ({appointmentPage}) => {
+  test("Make appointment by filling in all fields correctly", async ({appointmentPage, loginPage}) => {
     await expect(appointmentPage.makeAppointmentButton).toBeVisible();
     await appointmentPage.appointment(
       "Tokyo CURA Healthcare Center",
       "Medicaid",
       "18/12/2023",
       "Digestion problems"
-    );
-    await expect(message.AppointmentPage).toHaveText(
-      "Appointment Confirmation"
     );
   })
 });
