@@ -5,7 +5,7 @@ exports.AppointmentPage = class AppointmentPage {
     this.facility = page.locator("#combo_facility");
     this.readmission = page.locator("#chk_hospotal_readmission");
     this.program = page.locator(".col-sm-4");
-    this.calendar = page.locator("#txt_visit_date");
+    this.calendar = page.getByPlaceholder("dd/mm/yyyy");
     this.comment = page.locator("#txt_comment");
     this.bookAppointmentButton = page.locator("#btn-book-appointment");
   }
@@ -19,7 +19,7 @@ exports.AppointmentPage = class AppointmentPage {
     await this.readmission.click();
     await this.program.getByText(program).check();
     await this.calendar.click();
-    await this.calendar.fill(visitDate);
+    await this.calendar.type(visitDate);
     await this.comment.fill(comment);
     await this.bookAppointmentButton.click();
   }

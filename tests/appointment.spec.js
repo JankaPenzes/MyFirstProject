@@ -1,6 +1,7 @@
 const base = require("@playwright/test");
 import { LoginPage } from "../pages/login.page";
 import { AppointmentPage } from "../pages/appointment.page";
+import { AppointmentConfirmation } from "../pages/appointment-confirmation.page";
 const expect = base.expect;
 const test = base.test.extend({
   loginPage: async ({ page }, use) => {
@@ -16,13 +17,40 @@ const test = base.test.extend({
   },
 });
 test.describe("Make appointment", () => {
-  test("Make appointment by filling in all fields correctly", async ({appointmentPage, loginPage}) => {
+  test("Make appointment by filling in all fields correctly", async ({appointmentPage, loginPage, page}) => {
+    const appointmentConfirmation = new AppointmentConfirmation(page);
     await expect(appointmentPage.makeAppointmentButton).toBeVisible();
     await appointmentPage.appointment(
       "Tokyo CURA Healthcare Center",
       "Medicaid",
-      "18/12/2023",
+      "18/12/2024",
       "Digestion problems"
     );
+    await expect(appointmentConfirmation.message).toBeVisible();
+    await expect(appointmentConfirmation.message).toHaveText("Please be informed that your appointment has been booked as following:");
+  });
+  test("Make appointment by filling in all fields correctly 2", async ({appointmentPage, loginPage, page}) => {
+    const appointmentConfirmation = new AppointmentConfirmation(page);
+    await expect(appointmentPage.makeAppointmentButton).toBeVisible();
+    await appointmentPage.appointment(
+      "Hongkong CURA Healthcare Center",
+      "Medicare",
+      "18/12/2024",
+      "Digestion problems"
+    );
+    await expect(appointmentConfirmation.message).toBeVisible();
+    await expect(appointmentConfirmation.message).toHaveText("Please be informed that your appointment has been booked as following:");
+  });
+  test("Make appointment by filling in all fields correctly 3", async ({appointmentPage, loginPage, page}) => {
+    const appointmentConfirmation = new AppointmentConfirmation(page);
+    await expect(appointmentPage.makeAppointmentButton).toBeVisible();
+    await appointmentPage.appointment(
+      "Seoul CURA Healthcare Center",
+      "None",
+      "18/12/2024",
+      "Digestion problems"
+    );
+    await expect(appointmentConfirmation.message).toBeVisible();
+    await expect(appointmentConfirmation.message).toHaveText("Please be informed that your appointment has been booked as following:");
   })
 });
