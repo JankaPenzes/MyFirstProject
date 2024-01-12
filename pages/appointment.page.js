@@ -14,7 +14,9 @@ exports.AppointmentPage = class AppointmentPage {
       "https://katalon-demo-cura.herokuapp.com/#appointment"
     )
   }
-  async appointment(facility, program, visitDate, comment) {
+  async appointment(facility, program, options = {visitDate, comment}) {
+    let visitDate = options.visitDate||""
+    let comment = options.comment||""
     await this.facility.selectOption({value:facility})
     await this.readmission.click();
     await this.program.getByText(program).check();

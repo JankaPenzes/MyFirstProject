@@ -15,10 +15,16 @@ const test = base.test.extend({
     await appointmentPage.waitFor();
     await use(appointmentPage);
   },
+  appointmentConfirmation: async ({ page }, use) => {
+    const appointmentConfirmation = new AppointmentConfirmation(page);
+    await appointmentConfirmation.waitFor();
+    await use(appointmentConfirmation);
+    await expect(appointmentConfirmation.message).toBeVisible();
+    await expect(appointmentConfirmation.message).toHaveText("Please be informed that your appointment has been booked as following:");
+  }
 });
 test.describe("Make appointment", () => {
-  test("Make appointment by filling in all fields correctly", async ({appointmentPage, loginPage, page}) => {
-    const appointmentConfirmation = new AppointmentConfirmation(page);
+  test("Make appointment by filling in all fields correctly", async ({appointmentPage, loginPage, page, appointmentConfirmation}) => {
     await expect(appointmentPage.makeAppointmentButton).toBeVisible();
     await appointmentPage.appointment(
       "Tokyo CURA Healthcare Center",
@@ -26,9 +32,8 @@ test.describe("Make appointment", () => {
       "18/12/2024",
       "Digestion problems"
     );
-    await expect(appointmentConfirmation.message).toBeVisible();
-    await expect(appointmentConfirmation.message).toHaveText("Please be informed that your appointment has been booked as following:");
   });
+
   test("Make appointment by filling in all fields correctly 2", async ({appointmentPage, loginPage, page}) => {
     const appointmentConfirmation = new AppointmentConfirmation(page);
     await expect(appointmentPage.makeAppointmentButton).toBeVisible();
@@ -41,28 +46,36 @@ test.describe("Make appointment", () => {
     await expect(appointmentConfirmation.message).toBeVisible();
     await expect(appointmentConfirmation.message).toHaveText("Please be informed that your appointment has been booked as following:");
   });
+
   test("Make appointment by filling in all fields correctly 3", async ({appointmentPage, loginPage, page}) => {
     const appointmentConfirmation = new AppointmentConfirmation(page);
     await expect(appointmentPage.makeAppointmentButton).toBeVisible();
     await appointmentPage.appointment(
       "Seoul CURA Healthcare Center",
       "None",
-      "18/12/2024",
-      "Digestion problems"
+      {visitDate:"18/12",
+      comment:"fjgj"}
     );
     await expect(appointmentConfirmation.message).toBeVisible();
     await expect(appointmentConfirmation.message).toHaveText("Please be informed that your appointment has been booked as following:");
-  })
+  });
+
   test("Make appointment without filling the comment section", async ({appointmentPage, loginPage, page}) => {
     const appointmentConfirmation = new AppointmentConfirmation(page);
     await expect(appointmentPage.makeAppointmentButton).toBeVisible();
     await appointmentPage.appointment(
       "Seoul CURA Healthcare Center",
       "None",
-      "18/12/2024",
-      ""
+      {visitDate:"18/12"}
     );
     await expect(appointmentConfirmation.message).toBeVisible();
     await expect(appointmentConfirmation.message).toHaveText("Please be informed that your appointment has been booked as following:");
-  })
+  });
+
+  test("Make appointment without filling the date", async ({appointmentPage, loginPage, page}) => {
+    const appointmentConfirmation = new AppointmentConfirmation(page);
+    await expect(appointmentPage.makeAppointmentButton).toBeVisible();
+    await appointmentPage.bookAppointmentButton.click();
+    await page.waitForTimeout(2000);
+  });
 });
