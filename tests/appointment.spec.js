@@ -53,4 +53,16 @@ test.describe("Make appointment", () => {
     await expect(appointmentConfirmation.message).toBeVisible();
     await expect(appointmentConfirmation.message).toHaveText("Please be informed that your appointment has been booked as following:");
   })
+  test("Make appointment without filling the comment section", async ({appointmentPage, loginPage, page}) => {
+    const appointmentConfirmation = new AppointmentConfirmation(page);
+    await expect(appointmentPage.makeAppointmentButton).toBeVisible();
+    await appointmentPage.appointment(
+      "Seoul CURA Healthcare Center",
+      "None",
+      "18/12/2024",
+      ""
+    );
+    await expect(appointmentConfirmation.message).toBeVisible();
+    await expect(appointmentConfirmation.message).toHaveText("Please be informed that your appointment has been booked as following:");
+  })
 });
