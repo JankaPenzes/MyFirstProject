@@ -13,12 +13,14 @@ exports.AppointmentConfirmation = class AppointmentConfirmation {
       "https://katalon-demo-cura.herokuapp.com/appointment.php#summary"
     )
   }
-  async confirmation(facility, program, visitDate, comment) {
+  async confirmation(facility, program, options = {visitDate, comment}) {
+    let visitDate = options.visitDate||""
+    let comment = options.comment||""
     await this.facility.toHaveText(facility);
     await this.readmission.toHaveText("Yes");
     await this.program.toHaveText(program);
     await this.date.toHaveText(visitDate);
-    await this.comment.fill(comment);
+    await this.comment.toHaveText(comment);
   }
 };
 

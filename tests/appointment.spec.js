@@ -21,61 +21,60 @@ const test = base.test.extend({
     await use(appointmentConfirmation);
     await expect(appointmentConfirmation.message).toBeVisible();
     await expect(appointmentConfirmation.message).toHaveText("Please be informed that your appointment has been booked as following:");
+    await appointmentConfirmation.confirmation();
   }
 });
+
 test.describe("Make appointment", () => {
   test("Make appointment by filling in all fields correctly", async ({appointmentPage, loginPage, page, appointmentConfirmation}) => {
-    await expect(appointmentPage.makeAppointmentButton).toBeVisible();
-    await appointmentPage.appointment(
-      "Tokyo CURA Healthcare Center",
-      "Medicaid",
-      "18/12/2024",
-      "Digestion problems"
-    );
+    await test.step ('Launch appointment page', async()=> {
+      await expect(appointmentPage.makeAppointmentButton).toBeVisible();
+    });
+    await test.step ('Make appointment', async()=> {
+      await appointmentPage.appointment(
+        "Tokyo CURA Healthcare Center",
+        "Medicaid",
+        {visitDate:"18/12/2024",
+        comment:"Digestion problems"}
+      );
+    });
   });
 
-  test("Make appointment by filling in all fields correctly 2", async ({appointmentPage, loginPage, page}) => {
-    const appointmentConfirmation = new AppointmentConfirmation(page);
+  test("Make appointment by filling in all fields correctly 2", async ({appointmentPage, loginPage, page, appointmentConfirmation}) => {
     await expect(appointmentPage.makeAppointmentButton).toBeVisible();
     await appointmentPage.appointment(
       "Hongkong CURA Healthcare Center",
       "Medicare",
-      "18/12/2024",
-      "Digestion problems"
+      {visitDate:"18/12/2024",
+      comment:"Digestion problems"}
     );
-    await expect(appointmentConfirmation.message).toBeVisible();
-    await expect(appointmentConfirmation.message).toHaveText("Please be informed that your appointment has been booked as following:");
   });
 
-  test("Make appointment by filling in all fields correctly 3", async ({appointmentPage, loginPage, page}) => {
-    const appointmentConfirmation = new AppointmentConfirmation(page);
+  test("Make appointment by filling in all fields correctly 3", async ({appointmentPage, loginPage, page, appointmentConfirmation}) => {
     await expect(appointmentPage.makeAppointmentButton).toBeVisible();
     await appointmentPage.appointment(
       "Seoul CURA Healthcare Center",
       "None",
-      {visitDate:"18/12",
-      comment:"fjgj"}
+      {visitDate:"18/12/2024",
+      comment:"Digestion problems"}
     );
-    await expect(appointmentConfirmation.message).toBeVisible();
-    await expect(appointmentConfirmation.message).toHaveText("Please be informed that your appointment has been booked as following:");
   });
 
-  test("Make appointment without filling the comment section", async ({appointmentPage, loginPage, page}) => {
-    const appointmentConfirmation = new AppointmentConfirmation(page);
+  test("Make appointment without filling the comment section", async ({appointmentPage, loginPage, page, appointmentConfirmation}) => {
     await expect(appointmentPage.makeAppointmentButton).toBeVisible();
     await appointmentPage.appointment(
       "Seoul CURA Healthcare Center",
       "None",
-      {visitDate:"18/12"}
+      {visitDate:"18/12/2024"}
     );
-    await expect(appointmentConfirmation.message).toBeVisible();
-    await expect(appointmentConfirmation.message).toHaveText("Please be informed that your appointment has been booked as following:");
   });
 
-  test("Make appointment without filling the date", async ({appointmentPage, loginPage, page}) => {
-    const appointmentConfirmation = new AppointmentConfirmation(page);
+  test("Make appointment without filling the date", async ({appointmentPage, loginPage, page, appointmentConfirmation}) => {
     await expect(appointmentPage.makeAppointmentButton).toBeVisible();
-    await appointmentPage.bookAppointmentButton.click();
-    await page.waitForTimeout(2000);
+    await appointmentPage.appointment(
+      "Seoul CURA Healthcare Center",
+      "None",
+      {comment:"Digestion problems"}
+    );
   });
 });
