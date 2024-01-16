@@ -41,40 +41,56 @@ test.describe("Make appointment", () => {
   });
 
   test("Make appointment by filling in all fields correctly 2", async ({appointmentPage, loginPage, page, appointmentConfirmation}) => {
-    await expect(appointmentPage.makeAppointmentButton).toBeVisible();
-    await appointmentPage.appointment(
-      "Hongkong CURA Healthcare Center",
-      "Medicare",
-      {visitDate:"18/12/2024",
-      comment:"Digestion problems"}
-    );
+    await test.step ('Launch appointment page', async()=> {
+      await expect(appointmentPage.makeAppointmentButton).toBeVisible();
+    });
+    await test.step ('Make appointment', async()=> {
+      await appointmentPage.appointment(
+        "Hongkong CURA Healthcare Center",
+        "Medicare",
+        {visitDate:"18/12/2024",
+        comment:"Digestion problems"}
+      );
+    });
   });
 
   test("Make appointment by filling in all fields correctly 3", async ({appointmentPage, loginPage, page, appointmentConfirmation}) => {
-    await expect(appointmentPage.makeAppointmentButton).toBeVisible();
-    await appointmentPage.appointment(
-      "Seoul CURA Healthcare Center",
-      "None",
-      {visitDate:"18/12/2024",
-      comment:"Digestion problems"}
-    );
+    await test.step ('Launch appointment page', async()=> {
+      await expect(appointmentPage.makeAppointmentButton).toBeVisible();
+    });
+    await test.step ('Make appointment', async()=> {
+      await appointmentPage.appointment(
+        "Seoul CURA Healthcare Center",
+        "None",
+        {visitDate:"18/12/2024",
+        comment:"Digestion problems"}
+      );
+    });
   });
 
   test("Make appointment without filling the comment section", async ({appointmentPage, loginPage, page, appointmentConfirmation}) => {
-    await expect(appointmentPage.makeAppointmentButton).toBeVisible();
-    await appointmentPage.appointment(
-      "Seoul CURA Healthcare Center",
-      "None",
-      {visitDate:"18/12/2024"}
-    );
+    await test.step ('Launch appointment page', async()=> {
+      await expect(appointmentPage.makeAppointmentButton).toBeVisible();
+    });
+    await test.step ('Make appointment', async()=> {
+      await appointmentPage.appointment(
+        "Seoul CURA Healthcare Center",
+        "None",
+        {visitDate:"18/12/2024"}
+      );
+    });
   });
 
   test("Make appointment without filling the date", async ({appointmentPage, loginPage, page, appointmentConfirmation}) => {
-    await expect(appointmentPage.makeAppointmentButton).toBeVisible();
-    await appointmentPage.appointment(
-      "Seoul CURA Healthcare Center",
-      "None",
-      {comment:"Digestion problems"}
-    );
+    await test.step ('Launch appointment page', async()=> {
+      await expect(appointmentPage.makeAppointmentButton).toBeVisible();
+    });
+    await test.step ('Make appointment', async()=> {
+      await appointmentPage.appointment(
+        "Seoul CURA Healthcare Center",
+        "None",
+        {comment:"Digestion problems"}
+      );
+    });
   });
 });
