@@ -10,7 +10,7 @@ const test = base.test.extend({
   },
 });
 test.describe("Log in", () => {
-  test("Correct username and password", async ({ page, loginPage }) => {
+  test("@my-login-01-Correct username and password", async ({ page, loginPage }) => {
     const appointmentPage = new AppointmentPage(page);
     await loginPage.login("John Doe", "ThisIsNotAPassword");
     await page.waitForURL(
@@ -18,19 +18,19 @@ test.describe("Log in", () => {
     );
     await expect(appointmentPage.makeAppointmentButton).toBeVisible();
   });
-  test("Incorrect username and password", async ({ page, loginPage }) => {
+  test("@my-login-02-Incorrect username and password", async ({ page, loginPage }) => {
     await loginPage.login("John", "ThisIsNot");
     await expect(loginPage.loginError).toHaveText(
       "Login failed! Please ensure the username and password are valid."
     );
   });
-  test("Incorrect username and correct password", async ({ page, loginPage }) => {
+  test("@my-login-03-Incorrect username and correct password", async ({ page, loginPage }) => {
     await loginPage.login("John", "ThisIsNotAPassword");
     await expect(loginPage.loginError).toHaveText(
       "Login failed! Please ensure the username and password are valid."
     );
   });
-  test("Correct username and incorrect password", async ({ page, loginPage }) => {
+  test("@my-login-04-Correct username and incorrect password", async ({ page, loginPage }) => {
     await loginPage.login("John Doe", "ThisIsNot");
     await expect(loginPage.loginError).toHaveText(
       "Login failed! Please ensure the username and password are valid."
