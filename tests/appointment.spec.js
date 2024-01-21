@@ -31,7 +31,7 @@ test.describe("Make appointment", () => {
       await appointmentPage.appointment(
         "Tokyo CURA Healthcare Center",
         "Medicaid",
-        {visitDate:"18/12/2024",
+        {visitDate:"18/12/2024",  
         comment:"Digestion problems"}
       );
     });

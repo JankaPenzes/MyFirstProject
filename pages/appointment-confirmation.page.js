@@ -16,7 +16,7 @@ exports.AppointmentConfirmation = class AppointmentConfirmation {
   async confirmation(facility, program, options = {visitDate, comment}) {
     let visitDate = options.visitDate||""
     let comment = options.comment||""
-    await this.facility.toHaveValue(facility);
+    await this.facility.toContainText(facility);
     await this.readmission.toHaveText("Yes");
     await this.program.toHaveText(program);
     await this.date.toHaveText(visitDate);
