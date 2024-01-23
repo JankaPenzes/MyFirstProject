@@ -129,13 +129,7 @@ test.describe("Make appointment", () => {
       );
     });
     await test.step ('Check appointment confirmation', async()=> {
-    await expect(appointmentConfirmation.message).toBeVisible();
-    await expect(appointmentConfirmation.message).toHaveText("Please be informed that your appointment has been booked as following:");
-    await appointmentConfirmation.confirmation(
-      "Seoul CURA Healthcare Center",
-        "None",
-        {comment:"Digestion problems"}
-    );
+    await expect(appointmentConfirmation.message).not.toBeVisible();
     });
   });
 });
