@@ -15,8 +15,8 @@ const test = base.test.extend({
     await appointmentPage.waitFor();
     await use(appointmentPage);
   },
-  appointmentConfirmation: async ({ page }, use) => {
-    const appointmentConfirmation = new AppointmentConfirmation(page);
+  appointmentConfirmation: async ({ page}, use) => {
+    const appointmentConfirmation = new AppointmentConfirmation(page,expect);
     await appointmentConfirmation.waitFor();
     await use(appointmentConfirmation);
   }
@@ -117,7 +117,8 @@ test.describe("Make appointment", () => {
     });
   });
 
-  test("@my-appointment-05-Make appointment without filling the date", async ({appointmentPage, loginPage, page, appointmentConfirmation}) => {
+  test("@my-appointment-05-Make appointment without filling the date", async ({appointmentPage, loginPage, page}) => {
+    const appointmentConfirmation = new AppointmentConfirmation(page,expect);
     await test.step ('Launch appointment page', async()=> {
       await expect(appointmentPage.makeAppointmentButton).toBeVisible();
     });
@@ -129,7 +130,7 @@ test.describe("Make appointment", () => {
       );
     });
     await test.step ('Check appointment confirmation', async()=> {
-    await expect(appointmentConfirmation.message).not.toBeVisible();
+      await expect(appointmentConfirmation.message).not.toBeVisible();
     });
   });
 });

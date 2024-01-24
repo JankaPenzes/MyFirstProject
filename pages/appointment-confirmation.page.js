@@ -1,6 +1,7 @@
 exports.AppointmentConfirmation = class AppointmentConfirmation {
-  constructor(page) {
+  constructor(page,expect) {
     this.page = page;
+    this.expect = expect;
     this.message = page.locator(".lead");
     this.facility = page.locator("#facility");
     this.readmission = page.locator("#hospital_readmission");
@@ -16,11 +17,11 @@ exports.AppointmentConfirmation = class AppointmentConfirmation {
   async confirmation(facility, program, options = {visitDate, comment}) {
     let visitDate = options.visitDate||""
     let comment = options.comment||""
-    await this.facility.toContainText(facility);
-    await this.readmission.toHaveText("Yes");
-    await this.program.toHaveText(program);
-    await this.date.toHaveText(visitDate);
-    await this.comment.toHaveText(comment);
+    await this.expect(this.facility).toContainText(facility);
+    await this.expect(this.readmission).toHaveText("Yes");
+    await this.expect(this.program).toHaveText(program);
+    await this.expect(this.date).toHaveText(visitDate);
+    await this.expect(this.comment).toHaveText(comment);
   }
 };
 
